@@ -43,4 +43,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: screensaver-card-build
-          path: dist/  # Salva tutto dalla cartella "dist"
+          path: dist/screensaver-card.js  # Salva tutto dalla cartella "dist"
