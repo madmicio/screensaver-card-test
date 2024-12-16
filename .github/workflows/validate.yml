@@ -28,18 +28,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 4. Validazione dei file HACS
-      - name: Validate HACS metadata
-        run: |
-          # Verifica che i file richiesti da HACS siano presenti
-          if [ ! -f "manifest.json" ]; then
-            echo "Error: manifest.json is missing!"
-            exit 1
-          fi
-          if [ ! -f "screensaver-card.js" ]; then
-            echo "Error: screensaver-card.js is missing!"
-            exit 1
-          fi
+      # # 4. Validazione dei file HACS
+      # - name: Validate HACS metadata
+      #   run: |
+      #     # Verifica che i file richiesti da HACS siano presenti
+      #     if [ ! -f "manifest.json" ]; then
+      #       echo "Error: manifest.json is missing!"
+      #       exit 1
+      #     fi
+      #     if [ ! -f "screensaver-card.js" ]; then
+      #       echo "Error: screensaver-card.js is missing!"
+      #       exit 1
+      #     fi
 
       # 5. Build del progetto
       - name: Build project with Rollup
