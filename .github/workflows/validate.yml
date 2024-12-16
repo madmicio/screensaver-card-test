@@ -1,17 +1,63 @@
-name: Validate HACS
+name: HACS Validation
 
 on:
   push:
+    branches:
+      - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   validate:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      # 1. Checkout del codice
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Validate HACS
-        uses: "hacs/action@main"
+      # 2. Setup di Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          category: "plugin"
+          node-version: 20
+          cache: 'npm'
+
+      # 3. Installazione delle dipendenze
+      - name: Install dependencies
+        run: npm install
+
+      # 4. Validazione dei file HACS
+      - name: Validate HACS metadata
+        run: |
+          # Verifica che i file richiesti da HACS siano presenti
+          if [ ! -f "manifest.json" ]; then
+            echo "Error: manifest.json is missing!"
+            exit 1
+          fi
+          if [ ! -f "screensaver-card.js" ]; then
+            echo "Error: screensaver-card.js is missing!"
+            exit 1
+          fi
+
+      # 5. Build del progetto
+      - name: Build project with Rollup
+        run: npm run build
+
+      # 6. Carica gli artifact della build (opzionale)
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: screensaver-card-build
+          path: dist/
+
+      # 7. Verifica che la versione nel file manifest sia corretta (opzionale)
+      - name: Validate version in manifest
+        run: |
+          VERSION=$(jq -r .version dist/manifest.json)
+          if [ "$VERSION" != "$npm_package_version" ]; then
+            echo "Error: Version in manifest.json does not match package version!"
+            exit 1
+          fi
+
