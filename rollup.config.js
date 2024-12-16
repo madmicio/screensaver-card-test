@@ -31,12 +31,23 @@ const plugins = [
   !dev && terser(),
 ];
 
-export default {
-  input: "src/screensaver-card.ts",  // Assicurati che il punto di ingresso sia corretto
-  output: {
-    file: "dist/screensaver-card.js",  // Questo è il file di output
-    format: "es",
-    sourcemap: false,
+// export default {
+//   input: "src/screensaver-card.ts",  // Assicurati che il punto di ingresso sia corretto
+//   output: {
+//     file: "dist/screensaver-card.js",  // Questo è il file di output
+//     format: "es",
+//     sourcemap: false,
+//   },
+//   plugins: [...plugins],
+// };
+
+export default [
+  {
+      input: "src/screen-saver.ts",
+      output: {
+          dir: "dist",
+          format: "es",
+      },
+      plugins: [...plugins],
   },
-  plugins: [...plugins],
-};
+];
