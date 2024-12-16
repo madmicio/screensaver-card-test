@@ -3,8 +3,8 @@ name: Build Screensaver Card
 on:
   push:
     branches:
-      - main  # Esegui la build ogni volta che c'è un push su "main"
-  pull_request:  # Esegui la build anche per le pull request
+      - main
+  pull_request:
     branches:
       - main
 
@@ -13,34 +13,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout del codice
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20  # Puoi specificare la versione che preferisci
-          cache: 'npm'      # Cache delle dipendenze npm
-          
-      - name: Fix Rollup permissions
-        run: chmod +x ./node_modules/.bin/rollup
-  
-      # Installa le dipendenze
+          node-version: 18
+          cache: 'npm'
+
       - name: Install dependencies
         run: npm install
 
-      # Esegui la build con Rollup
-      - name: Build project
+      - name: Fix Rollup permissions
+        run: chmod +x ./node_modules/.bin/rollup  # Imposta i permessi corretti per Rollup
+
+      - name: Build project with Rollup
         run: npm run build
 
-      - name: List dist contents
-        run: ls -la dist/
-
-      # Salva i file di output come artifact
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
           name: screensaver-card-build
-          path: dist/screensaver-card.js  # Salva tutto dalla cartella "dist"
+          path: dist/
