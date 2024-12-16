@@ -43,7 +43,7 @@ const plugins = [
 
 export default [
   {
-      input: "src/screen-saver.ts",
+      input: "src/screensaver-card.ts",
       output: {
           dir: "dist",
           format: "es",
