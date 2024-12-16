@@ -18,8 +18,8 @@
         "start": "rollup -c rollup.config.js --watch",
         "build": "npm run rollup && npm run add-version",
         "add-version": "cross-var replace-in-file \"@SCREENSAVER_CARD_VERSION_PLACEHOLDER@\" \"$npm_package_version\" \"dist/screensaver-card.js\"",
-        "rollup": "rollup -c"
-    },
+        "rollup": "npx rollup -c"  // Usa npx per eseguire rollup
+        },
     "author": "Maurizio Arci",
     "license": "MIT",
     "devDependencies": {
