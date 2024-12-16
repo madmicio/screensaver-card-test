@@ -21,9 +21,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18  # Puoi specificare la versione che preferisci
+          node-version: 20  # Puoi specificare la versione che preferisci
           cache: 'npm'      # Cache delle dipendenze npm
-
+          
+      - name: Fix Rollup permissions
+        run: chmod +x ./node_modules/.bin/rollup
+  
       # Installa le dipendenze
       - name: Install dependencies
         run: npm install
