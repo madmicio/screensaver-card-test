@@ -1,27 +1,40 @@
-name: 'Build'
+name: Build Screensaver Card
 
 on:
   push:
-  pull_request:
+    branches:
+      - main  # Esegui la build ogni volta che c'è un push su "main"
+  pull_request:  # Esegui la build anche per le pull request
+    branches:
+      - main
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v1
+      # Checkout del codice
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: 18  # Puoi specificare la versione che preferisci
+          cache: 'npm'      # Cache delle dipendenze npm
 
-      - name: Build
-        run: |
-          npm install
-          npm run build
+      # Installa le dipendenze
+      - name: Install dependencies
+        run: npm install
 
-      - name: Archive built file
+      # Esegui la build con Rollup
+      - name: Build project
+        run: npm run build
+
+      # Salva i file di output come artifact
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: screensaver-card.js
-          path: dist/screensaver-card.js
+          name: screensaver-card-build
+          path: dist/  # Salva tutto dalla cartella "dist"
