@@ -5,8 +5,11 @@
     "type": "module",
     "main": "src/screensaver-card.js",
     "scripts": {
-        "build": "rollup -c"
-    },
+        "start": "rollup -c rollup.config.js --watch",
+        "build": "npm run rollup && npm run add-version",
+        "add-version": "cross-var replace-in-file \"@SCREENSAVER_CARD_VERSION_PLACEHOLDER@\" \"$npm_package_version\" \"dist/lg-remote-control.js\"",
+        "rollup": "rollup -c"
+    },   
     "keywords": [
         "home-assistant",
         "custom-card"
@@ -14,7 +17,11 @@
     "author": "Maurizio Arci",
     "license": "MIT",
     "devDependencies": {
+        "@babel/core": "^7.26.0",
+        "@babel/preset-env": "^7.26.0",
+        "@rollup/plugin-babel": "^6.0.4",
         "@rollup/plugin-commonjs": "^28.0.2",
+        "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-node-resolve": "^16.0.0",
         "@rollup/plugin-terser": "^0.4.4",
         "@rollup/plugin-typescript": "^12.1.2",
