@@ -13,7 +13,7 @@
     "module": "screensaver-card.js",
     "type": "module",
     "main": "src/screensaver-card.js",
-    "repository": "git@github.com:madmicio/screensaver-cardl.git",
+    "repository": "git@github.com:madmicio/screensaver-card.git",
     "scripts": {
         "start": "rollup -c rollup.config.js --watch",
         "build": "npm run rollup && npm run add-version",
