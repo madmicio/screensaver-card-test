@@ -9,39 +9,34 @@ import json from "@rollup/plugin-json";
 const dev = process.env.ROLLUP_WATCH;
 
 const serveopts = {
-    contentBase: ["./dist"],
-    host: "0.0.0.0",
-    port: 5002,
-    allowCrossOrigin: true,
-    headers: {
-        "Access-Control-Allow-Origin": "*",
-    },
+  contentBase: ["./dist"],
+  host: "0.0.0.0",
+  port: 5002,
+  allowCrossOrigin: true,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+  },
 };
 
-if (dev) {
-    console.log("Avvio del server sulla porta 5002...");
-}
-
 const plugins = [
-    nodeResolve(),
-    commonjs(),
-    typescript(),
-    json(),
-    babel({
-        exclude: "node_modules/**",
-        babelHelpers: "bundled",
-    }),
-    dev && serve(serveopts),
-    !dev && terser(),
+  nodeResolve(),
+  commonjs(),
+  typescript(),
+  json(),
+  babel({
+    exclude: "node_modules/**",
+    babelHelpers: "bundled",
+  }),
+  dev && serve(serveopts),
+  !dev && terser(),
 ];
 
-export default [
-    {
-        input: "src/screensaver-card.ts",
-        output: {
-            dir: "dist",
-            format: "es",
-        },
-        plugins: [...plugins],
-    },
-];
+export default {
+  input: "src/screensaver-card.ts",  // Assicurati che il punto di ingresso sia corretto
+  output: {
+    file: "dist/screensaver-card.js",  // Questo è il file di output
+    format: "es",
+    sourcemap: false,
+  },
+  plugins: [...plugins],
+};
